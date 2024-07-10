@@ -79,13 +79,13 @@ Run DataBase via Docker.
   docker compose up -d
 ```
 
-Start Prisma (wait create postgres_data)
+Start Prisma (wait create postgres_data and try 2x)
 
 ```bash
   npx prisma migrate dev --name init
 ```
 
-Start the server
+Start the server (only when finish the above command)
 
 ```bash
   npm run start
