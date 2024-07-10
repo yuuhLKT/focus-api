@@ -46,6 +46,12 @@ Simple API for the Focus Mode extension website, the API is used to report bugs 
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of item to delete |
 
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`DATABASE_URL="postgresql://pguser:pgpassword@localhost:5432/mydb?schema=public"`
+
     
 ## Run Locally
 
@@ -85,9 +91,4 @@ Start the server
   npm run start
 ```
 
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-`DATABASE_URL="postgresql://pguser:pgpassword@localhost:5432/mydb?schema=public"`
 
