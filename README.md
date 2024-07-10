@@ -1,7 +1,7 @@
 
 # Focus Extension API
 
-Simple API for the Focus Mode extension website, the API is used to report bugs or provide feedback.
+Simple API for the [Focus Mode extension](https://github.com/yuuhLKT/Focus-Extension) website, the API is used to report bugs and receive feedback. The API was made using Typescript, Node, Prisma, Docker for Postgresql and Fastify.
 
 ## API Reference
 
