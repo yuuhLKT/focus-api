@@ -8,7 +8,7 @@ Simple API for the Focus Mode extension website, the API is used to report bugs 
 #### **POST**
 
 ```http
-  post /report-feedback
+  POST /report-feedback
 ```
 
 | Parameter | Type     | Description                       |
@@ -39,7 +39,7 @@ Simple API for the Focus Mode extension website, the API is used to report bugs 
 #### **DELETE ITEM**
 
 ```http
-  GET /report-feedback/${id}
+  DELETE /report-feedback/${id}
 ```
 
 | Parameter | Type     | Description                       |
