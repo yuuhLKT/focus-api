@@ -16,25 +16,17 @@ Simple API for the [Focus Mode extension](https://github.com/yuuhLKT/Focus-Exten
 | `title`      | `string` | **Required**. Title of post |
 | `content`      | `string` | **Required**. Content of post |
 | `authorName`      | `string` | **Required**. Name of the post author |
-| `type`      | `enum` | **Required**. BUG or FEEDBACK |
+| `type`      | `enum` | **Required**. bug or feedback |
 
 #### **GET** 
 
 ```http
-  GET /report-feedback/bugs
+  GET /report-feedback/?type=${type}
 ```
 
 | Parameter |  Description                |
 | :-------- |  :------------------------- |
-| `/bugs`   |  **GET** all bugs reports |
-
-```http
-  GET /report-feedback/feedbacks
-```
-
-| Parameter |  Description                |
-| :-------- |  :------------------------- |
-| `/feedbacks`   |  **GET** all feedbacks |
+| `type`   |  **REQUIRED** feedback or bug|
 
 #### **DELETE ITEM**
 
@@ -79,10 +71,10 @@ Run DataBase via Docker.
   docker compose up -d
 ```
 
-Start Prisma (wait create postgres_data and try 2x)
+Start Prisma (wait create postgres_data and after 10 secods)
 
 ```bash
-  npx prisma migrate dev --name init
+  npx prisma migrate dev --name init --skip-generate
 ```
 
 Start the server (only when finish the above command)

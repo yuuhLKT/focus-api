@@ -1,3 +1,4 @@
+import { ReportFeedbackType } from "@prisma/client";
 import { FastifyInstance } from "fastify";
 import { ReportFeedbackCreate } from "../interfaces/report-feedback.interface";
 import { ReportFeedbackUseCase } from "../use-cases/report-feedback.use-case";
@@ -24,21 +25,21 @@ export async function reportFeedbackRoutes(fastify: FastifyInstance) {
         reply.code(201).send(data);
     });
 
-    fastify.get('/bugs', async (req, reply) => {
-        const bugs = await reportFeedbackUseCase.findAllByType('BUG');
-        if (bugs.length === 0) {
-            return reply.code(404).send({ message: 'No bug reports found' });
-        }
-        reply.send(bugs);
-    });
+    fastify.get('/', async (req, reply) => {
+        const { type } = req.query as { type: ReportFeedbackType };
+        let reports;
 
-    fastify.get('/feedbacks', async (req, reply) => {
-        const feedbacks = await reportFeedbackUseCase.findAllByType('FEEDBACK');
-        if (feedbacks.length === 0) {
-            return reply.code(404).send({ message: 'No feedbacks found' });
+        if (type) {
+            reports = await reportFeedbackUseCase.findAllByType(type);
+        } else {
+            return reply.code(400).send({ message: 'Type query parameter is required' });
         }
-        reply.send(feedbacks);
 
+        if (!reports || reports.length === 0) {
+            return reply.code(404).send({ message: `No reports found for type: ${type}` });
+        }
+
+        reply.send(reports);
     });
 
     fastify.delete<{ Params: { id: string } }>('/:id', async (req, reply) => {
@@ -47,3 +48,4 @@ export async function reportFeedbackRoutes(fastify: FastifyInstance) {
         reply.code(200).send({ message: `Report or feedback with id: ${id} deleted successfully` });
     });
 }
+

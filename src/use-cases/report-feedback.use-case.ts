@@ -16,7 +16,7 @@ class ReportFeedbackUseCase {
                     title,
                     content,
                     authorName,
-                    type,
+                    type: type.toUpperCase() as ReportFeedbackType,
                 },
             });
             return result;
@@ -27,7 +27,7 @@ class ReportFeedbackUseCase {
 
     async findAllByType(type: ReportFeedbackType): Promise<ReportFeedback[]> {
         try {
-            return this.reportFeedbackRepository.findAllByType(type);
+            return this.reportFeedbackRepository.findAllByType(type.toUpperCase() as ReportFeedbackType);
         } catch (error) {
             throw new Error('Error finding all by type: ' + error);
         }
