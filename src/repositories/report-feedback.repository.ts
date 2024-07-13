@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
 import { ReportFeedback, ReportFeedbackRepository, ReportFeedbackType } from "../interfaces/report-feedback.interface";
+import { prisma } from '../utils/prisma';
 
-const prisma = new PrismaClient();
+
 
 class ReportFeedbackRepositoryPrisma implements ReportFeedbackRepository {
     async create(data: ReportFeedback): Promise<ReportFeedback> {

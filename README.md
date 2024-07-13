@@ -75,6 +75,7 @@ Start Prisma (wait create postgres_data and after 10 secods)
 
 ```bash
   npx prisma migrate dev --name init --skip-generate
+  npx prisma generate
 ```
 
 Start the server (only when finish the above command)
