@@ -1,7 +1,7 @@
-import { ReportFeedbackType } from "@prisma/client";
-import { FastifyInstance } from "fastify";
-import { ReportFeedbackCreate } from "../interfaces/report-feedback.interface";
-import { ReportFeedbackUseCase } from "../use-cases/report-feedback.use-case";
+import { ReportFeedbackType } from '@prisma/client';
+import { FastifyInstance } from 'fastify';
+import { ReportFeedbackCreate } from '../interfaces/report-feedback.interface';
+import { ReportFeedbackUseCase } from '../use-cases/report-feedback.use-case';
 
 export async function reportFeedbackRoutes(fastify: FastifyInstance) {
     const reportFeedbackUseCase = new ReportFeedbackUseCase();
@@ -15,7 +15,7 @@ export async function reportFeedbackRoutes(fastify: FastifyInstance) {
                     title: { type: 'string' },
                     content: { type: 'string' },
                     authorName: { type: 'string' },
-                    type: { type: 'string' },
+                    type: { type: 'string', enum: Object.values(ReportFeedbackType).map(t => t.toLowerCase()) },
                 },
             },
         },
@@ -48,4 +48,3 @@ export async function reportFeedbackRoutes(fastify: FastifyInstance) {
         reply.code(200).send({ message: `Report or feedback with id: ${id} deleted successfully` });
     });
 }
-

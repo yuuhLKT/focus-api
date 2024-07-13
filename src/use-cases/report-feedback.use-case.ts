@@ -1,6 +1,5 @@
-import { ReportFeedback, ReportFeedbackCreate, ReportFeedbackRepository, ReportFeedbackType } from "../interfaces/report-feedback.interface";
+import { ReportFeedback, ReportFeedbackCreate, ReportFeedbackRepository, ReportFeedbackStatus, ReportFeedbackType } from "../interfaces/report-feedback.interface";
 import { ReportFeedbackRepositoryPrisma } from "../repositories/report-feedback.repository";
-import { Prisma } from "../utils/prisma";
 
 class ReportFeedbackUseCase {
     private reportFeedbackRepository: ReportFeedbackRepository;
@@ -9,27 +8,39 @@ class ReportFeedbackUseCase {
         this.reportFeedbackRepository = new ReportFeedbackRepositoryPrisma();
     }
 
-    async create({ title, content, authorName, type }: ReportFeedbackCreate) {
+    async create(data: ReportFeedbackCreate): Promise<ReportFeedback> {
+        const { title, content, authorName, type } = data;
+        const normalizedType = type.toUpperCase() as ReportFeedbackType;
+        let status: ReportFeedbackStatus;
+
+        if (normalizedType === 'FEEDBACK') {
+            status = 'FEEDBACK';
+        } else {
+            status = 'OPEN';
+        }
+
         try {
-            const result = await Prisma.reportFeedback.create({
-                data: {
-                    title,
-                    content,
-                    authorName,
-                    type: type.toUpperCase() as ReportFeedbackType,
-                },
+            const result = await this.reportFeedbackRepository.create({
+                id: '',
+                title,
+                content,
+                authorName,
+                type: normalizedType,
+                status,
+                createdAt: new Date(),
             });
             return result;
         } catch (error) {
-            throw new Error('Error creating report or feedback: ' + error);
+            throw new Error('Error creating report or feedback: ' + error.message);
         }
     }
 
     async findAllByType(type: ReportFeedbackType): Promise<ReportFeedback[]> {
         try {
-            return this.reportFeedbackRepository.findAllByType(type.toUpperCase() as ReportFeedbackType);
+            const normalizedType = type.toUpperCase() as ReportFeedbackType;
+            return this.reportFeedbackRepository.findAllByType(normalizedType);
         } catch (error) {
-            throw new Error('Error finding all by type: ' + error);
+            throw new Error('Error finding all by type: ' + error.message);
         }
     }
 
@@ -37,10 +48,9 @@ class ReportFeedbackUseCase {
         try {
             return this.reportFeedbackRepository.deleteById(id);
         } catch (error) {
-            throw new Error('Error for delete by id: ' + error);
+            throw new Error('Error deleting by id: ' + error.message);
         }
     }
 }
 
 export { ReportFeedbackUseCase };
-

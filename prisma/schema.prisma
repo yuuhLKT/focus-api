@@ -18,13 +18,21 @@ enum ReportFeedbackType {
   FEEDBACK
 }
 
+enum ReportFeedbackStatus {
+  OPEN
+  WORKING
+  SOLVED
+  FEEDBACK
+}
+
 model ReportFeedback {
-  id         String             @id @default(cuid())
+  id         String               @id @default(cuid())
   title      String
   content    String
-  createdAt  DateTime           @default(now())
+  createdAt  DateTime             @default(now())
   authorName String
   type       ReportFeedbackType
+  status     ReportFeedbackStatus @default(OPEN)
 
   @@map("report_feedbacks")
 }
