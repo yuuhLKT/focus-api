@@ -35,10 +35,6 @@ export async function reportFeedbackRoutes(fastify: FastifyInstance) {
             return reply.code(400).send({ message: 'Type query parameter is required' });
         }
 
-        if (!reports || reports.length === 0) {
-            return reply.code(404).send({ message: `No reports found for type: ${type}` });
-        }
-
         reply.send(reports);
     });
 

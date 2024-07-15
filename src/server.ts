@@ -1,7 +1,13 @@
+import cors from '@fastify/cors';
 import fastify, { FastifyInstance } from "fastify";
 import { reportFeedbackRoutes } from './routes/report-feedback.routes';
 
 const app: FastifyInstance = fastify({ logger: true });
+
+app.register(cors, {
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+});
 
 app.register(reportFeedbackRoutes, {
     prefix: '/report-feedback'
