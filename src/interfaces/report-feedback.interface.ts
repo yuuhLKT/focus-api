@@ -17,5 +17,6 @@ export interface ReportFeedbackCreate {
 export interface ReportFeedbackRepository {
     create(data: ReportFeedback): Promise<ReportFeedback>;
     findAllByType(type: ReportFeedbackType): Promise<ReportFeedback[]>;
+    findById(id: string): Promise<ReportFeedback | null>;
     deleteById(id: string): Promise<void>;
 }

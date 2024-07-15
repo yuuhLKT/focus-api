@@ -51,6 +51,15 @@ class ReportFeedbackUseCase {
             throw new Error('Error deleting by id: ' + error.message);
         }
     }
+
+    async findById(id: string): Promise<ReportFeedback | null> {
+        try {
+            return this.reportFeedbackRepository.findById(id);
+        } catch (error) {
+            throw new Error('Error finding by id: ' + error.message);
+        }
+    }
 }
 
 export { ReportFeedbackUseCase };
+

@@ -28,6 +28,14 @@ Simple API for the [Focus Mode extension](https://github.com/yuuhLKT/Focus-Exten
 | :-------- |  :------------------------- |
 | `type`   |  **REQUIRED** feedback or bug|
 
+```http
+  GET /report-feedback/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of item to get |
+
 #### **DELETE ITEM**
 
 ```http
@@ -43,6 +51,7 @@ Simple API for the [Focus Mode extension](https://github.com/yuuhLKT/Focus-Exten
 To run this project, you will need to add the following environment variables to your .env file
 
 `DATABASE_URL="postgresql://pguser:pgpassword@localhost:5432/mydb?schema=public"`
+`AUTH_TOKEN_HEADER="YOUR_TOKEN_PREFERENCE"`
 
     
 ## Run Locally

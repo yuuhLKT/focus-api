@@ -1,4 +1,5 @@
 import cors from '@fastify/cors';
+import 'dotenv/config';
 import fastify, { FastifyInstance } from "fastify";
 import { reportFeedbackRoutes } from './routes/report-feedback.routes';
 
