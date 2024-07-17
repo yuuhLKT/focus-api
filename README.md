@@ -5,6 +5,10 @@ Simple API for the [Focus Mode extension](https://github.com/yuuhLKT/Focus-Exten
 
 ## API Reference
 
+**POST, UPDATE and DELETE ROUTES NEEDS 'Authorization' IN HEADERS**
+
+### FEEDBACK and BUG REPORTS
+
 #### **POST**
 
 ```http
@@ -32,19 +36,66 @@ Simple API for the [Focus Mode extension](https://github.com/yuuhLKT/Focus-Exten
   GET /report-feedback/${id}
 ```
 
+#### **UPDATE**
+
+```http
+  PATCH /report-feedback/${id}
+```
+
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to get |
+| `status`      | `enum` | **Required**. Update status for: open, working or solved  |
 
-#### **DELETE ITEM**
+#### **DELETE**
 
 ```http
   DELETE /report-feedback/${id}
+``
+
+### COMMENTS
+
+#### **POST**
+
+```http
+  POST /admin/comments
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `commentTitle`      | `string` | **Required**. Title of comment |
+| `content`      | `string` | **Required**. Content of comment |
+| `authorName`      | `string` | **Required**. Name of the comment author |
+| `reportFeedbackId`      | `enum` | **Required**. ID of Report post or Feedback post |
+
+#### **GET** 
+
+```http
+  GET /admin/post/comments/${id}
+```
+
+| Parameter |  Description                |
+| :-------- |  :------------------------- |
+| `id`   |  **REQUIRED** ID of Report post or Feedback post |
+
+```http
+  GET /comments/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of comment |
+
+
+#### **DELETE**
+
+```http
+  DELETE /comments/${id}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of item to delete |
+
 
 ## Environment Variables
 
@@ -78,13 +129,6 @@ Run DataBase via Docker.
 
 ```bash
   docker compose up -d
-```
-
-Start Prisma (wait create postgres_data and after 10 secods)
-
-```bash
-  npx prisma migrate dev --name init --skip-generate
-  npx prisma generate
 ```
 
 Start the server (only when finish the above command)

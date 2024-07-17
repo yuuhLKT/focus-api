@@ -33,6 +33,19 @@ model ReportFeedback {
   authorName String
   type       ReportFeedbackType
   status     ReportFeedbackStatus @default(OPEN)
+  comments   Comment[]
 
   @@map("report_feedbacks")
+}
+
+model Comment {
+  id               String          @id @default(cuid())
+  commentTitle     String
+  authorName       String
+  content          String
+  createdAt        DateTime        @default(now())
+  ReportFeedback   ReportFeedback? @relation(fields: [reportFeedbackId], references: [id])
+  reportFeedbackId String?
+
+  @@map("comments")
 }

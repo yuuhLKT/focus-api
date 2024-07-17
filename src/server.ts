@@ -1,6 +1,7 @@
 import cors from '@fastify/cors';
 import 'dotenv/config';
 import fastify, { FastifyInstance } from "fastify";
+import { commentReportFeedbackRoutes } from './routes/comment.route';
 import { reportFeedbackRoutes } from './routes/report-feedback.routes';
 
 const app: FastifyInstance = fastify({ logger: true });
@@ -12,6 +13,10 @@ app.register(cors, {
 
 app.register(reportFeedbackRoutes, {
     prefix: '/report-feedback'
+})
+
+app.register(commentReportFeedbackRoutes, {
+    prefix: '/admin'
 })
 
 const start = async () => {
