@@ -18,5 +18,6 @@ export interface ReportFeedbackRepository {
     create(data: ReportFeedback): Promise<ReportFeedback>;
     findAllByType(type: ReportFeedbackType): Promise<ReportFeedback[]>;
     findById(id: string): Promise<ReportFeedback | null>;
+    updateStatusById(id: string, data: Partial<ReportFeedback>): Promise<ReportFeedback>;
     deleteById(id: string): Promise<void>;
 }

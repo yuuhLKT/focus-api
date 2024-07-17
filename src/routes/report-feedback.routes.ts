@@ -1,7 +1,7 @@
 import { ReportFeedbackType } from '@prisma/client';
 import 'dotenv/config';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import { ReportFeedbackCreate } from '../interfaces/report-feedback.interface';
+import { ReportFeedbackCreate, ReportFeedbackStatus } from '../interfaces/report-feedback.interface';
 import { ReportFeedbackUseCase } from '../use-cases/report-feedback.use-case';
 
 export async function reportFeedbackRoutes(fastify: FastifyInstance) {
@@ -47,13 +47,43 @@ export async function reportFeedbackRoutes(fastify: FastifyInstance) {
         reply.send(reports);
     });
 
-    // GET by ID ROUTE
+    // GET COMMENT by ID ROUTE
     fastify.get<{ Params: { id: string } }>('/:id', async (req: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) => {
         const { id } = req.params;
         const report = await reportFeedbackUseCase.findById(id);
 
         if (!report) {
             reply.code(404).send({ message: `Report or feedback with id: ${id} not found` });
+        } else {
+            reply.send(report);
+        }
+    });
+
+    // UPDATE STATUS by ID ROUTE
+    fastify.patch<{ Params: { id: string }, Body: { status: ReportFeedbackStatus } }>('/:id', {
+        schema: {
+            body: {
+                type: 'object',
+                required: ['status'],
+                properties: {
+                    status: { type: 'string', enum: ['open', 'working', 'solved'] },
+                },
+            },
+        },
+        preHandler: async (req, reply) => {
+            const isAuthorized = checkUserAuthorization(req);
+            if (!isAuthorized) {
+                reply.code(403).send({ message: 'Unauthorized' });
+            }
+        },
+    }, async (req: FastifyRequest<{ Params: { id: string }, Body: { status: ReportFeedbackStatus } }>, reply: FastifyReply) => {
+        const { id } = req.params;
+        const { status } = req.body;
+        const normalizedStatus = status.toUpperCase() as ReportFeedbackStatus;
+        const report = await reportFeedbackUseCase.updateStatusById(id, normalizedStatus);
+
+        if (!report) {
+            reply.code(404).send({ message: `Report with id: ${id} not found` });
         } else {
             reply.send(report);
         }
@@ -74,6 +104,7 @@ export async function reportFeedbackRoutes(fastify: FastifyInstance) {
     });
 }
 
+
 function checkUserAuthorization(req: FastifyRequest): boolean {
     const authToken = req.headers['authorization'];
     if (!authToken || authToken !== process.env.AUTH_TOKEN_HEADER) {
@@ -81,3 +112,4 @@ function checkUserAuthorization(req: FastifyRequest): boolean {
     }
     return true;
 }
+

@@ -44,6 +44,14 @@ class ReportFeedbackUseCase {
         }
     }
 
+    async findById(id: string): Promise<ReportFeedback | null> {
+        try {
+            return this.reportFeedbackRepository.findById(id);
+        } catch (error) {
+            throw new Error('Error finding by id: ' + error.message);
+        }
+    }
+
     async deleteById(id: string): Promise<void> {
         try {
             return this.reportFeedbackRepository.deleteById(id);
@@ -52,14 +60,14 @@ class ReportFeedbackUseCase {
         }
     }
 
-    async findById(id: string): Promise<ReportFeedback | null> {
+    async updateStatusById(id: string, status: ReportFeedbackStatus): Promise<ReportFeedback> {
         try {
-            return this.reportFeedbackRepository.findById(id);
+            const normalizedStatus = status.toUpperCase() as ReportFeedbackStatus;
+            return this.reportFeedbackRepository.updateStatusById(id, { status: normalizedStatus });
         } catch (error) {
-            throw new Error('Error finding by id: ' + error.message);
+            throw new Error('Error updating status by id: ' + error.message);
         }
     }
 }
 
 export { ReportFeedbackUseCase };
-

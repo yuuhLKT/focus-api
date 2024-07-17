@@ -1,6 +1,6 @@
 import { ReportFeedback, ReportFeedbackRepository, ReportFeedbackType } from "../interfaces/report-feedback.interface";
 import { prisma } from '../utils/prisma';
-import { generateTempId, getRealId, deleteTempId } from '../utils/tempIdManager';
+import { deleteTempId, generateTempId, getRealId } from '../utils/tempIdManager';
 
 class ReportFeedbackRepositoryPrisma implements ReportFeedbackRepository {
     async create(data: ReportFeedback): Promise<ReportFeedback> {
@@ -30,13 +30,6 @@ class ReportFeedbackRepositoryPrisma implements ReportFeedbackRepository {
         }));
     }
 
-    async deleteById(tempId: string): Promise<void> {
-        const realId = getRealId(tempId);
-        await prisma.reportFeedback.delete({
-            where: { id: realId },
-        });
-        deleteTempId(tempId);
-    }
 
     async findById(tempId: string): Promise<ReportFeedback | null> {
         const realId = getRealId(tempId);
@@ -48,6 +41,29 @@ class ReportFeedbackRepositoryPrisma implements ReportFeedbackRepository {
             id: tempId,
         } : null;
     }
+
+    async deleteById(tempId: string): Promise<void> {
+        const realId = getRealId(tempId);
+        await prisma.reportFeedback.delete({
+            where: { id: realId },
+        });
+        deleteTempId(tempId);
+    }
+
+    async updateStatusById(tempId: string, data: Partial<ReportFeedback>): Promise<ReportFeedback> {
+        const realId = getRealId(tempId);
+        const result = await prisma.reportFeedback.update({
+            where: { id: realId },
+            data: {
+                status: data.status,
+            },
+        });
+        return {
+            ...result,
+            id: tempId,
+        };
+    }
 }
 
 export { ReportFeedbackRepositoryPrisma };
+
