@@ -8,7 +8,7 @@ const app: FastifyInstance = fastify({ logger: true });
 
 
 app.register(cors, {
-    origin: '*',
+    origin: 'https://focus-website-rust.vercel.app/',
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
 });
 
