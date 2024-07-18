@@ -8,7 +8,7 @@ const app: FastifyInstance = fastify({ logger: true });
 
 
 app.register(cors, {
-    origin: [process.env.FRONTEND_URL],
+    origin: '*',
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
 });
 
