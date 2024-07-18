@@ -6,10 +6,8 @@ import { reportFeedbackRoutes } from './routes/report-feedback.routes';
 
 const app: FastifyInstance = fastify({ logger: true });
 
-const corsOrigin = process.env.FRONTEND_URL || 'http://localhost:5173';
-
 app.register(cors, {
-    origin: corsOrigin,
+    origin: 'https://focus-website-rust.vercel.app/',
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
 });
 
