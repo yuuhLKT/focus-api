@@ -1,13 +1,14 @@
 import 'dotenv/config';
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { CommentCreate } from '../interfaces/comment.interface';
+import { ReportFeedbackStatus } from '../interfaces/report-feedback.interface';
 import { CommentUseCase } from '../use-cases/comment.use-case';
 
 export async function commentReportFeedbackRoutes(fastify: FastifyInstance) {
     const commentUseCase = new CommentUseCase();
 
     // POST ROUTE for CREATE COMMENT and OPTIONAL FEEDBACK/REPORT STATUS UPDATE
-    fastify.post<{ Body: { comment: CommentCreate, status?: string } }>('/comments', {
+    fastify.post<{ Body: { comment: CommentCreate, status?: ReportFeedbackStatus } }>('/comments', {
         schema: {
             body: {
                 type: 'object',
@@ -23,7 +24,7 @@ export async function commentReportFeedbackRoutes(fastify: FastifyInstance) {
                             reportFeedbackId: { type: 'string' },
                         },
                     },
-                    status: { type: 'string', enum: ['OPEN', 'WORKING', 'SOLVED', 'FEEDBACK'], nullable: true },
+                    status: { type: 'string', enum: ['open', 'working', 'solved'], nullable: true },
                 },
             },
         },

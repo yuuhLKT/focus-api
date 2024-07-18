@@ -18,7 +18,7 @@ class CommentUseCase {
             const realId = getRealId(data.reportFeedbackId);
             await prisma.reportFeedback.update({
                 where: { id: realId },
-                data: { status: status as ReportFeedbackStatus },
+                data: { status: status.toUpperCase() as ReportFeedbackStatus },
             });
         }
 

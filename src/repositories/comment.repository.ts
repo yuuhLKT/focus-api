@@ -31,9 +31,8 @@ class CommentRepositoryPrisma implements CommentRepository {
     }
 
     async deleteById(id: string): Promise<void> {
-        const realId = getRealId(id);
         await prisma.comment.delete({
-            where: { id: realId },
+            where: { id: id },
         });
     }
 }
