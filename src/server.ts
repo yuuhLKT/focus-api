@@ -6,10 +6,12 @@ import { reportFeedbackRoutes } from './routes/report-feedback.routes';
 
 const app: FastifyInstance = fastify({ logger: true });
 
-app.register(cors, {
-    origin: '*',
+const corsOptions = {
+    origin: ['http://localhost:5173', process.env.FRONTEND_URL],
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-});
+};
+
+app.register(cors, corsOptions);
 
 app.register(reportFeedbackRoutes, {
     prefix: '/report-feedback'
