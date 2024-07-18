@@ -29,7 +29,7 @@ class CommentUseCase {
         try {
             return this.commentRepository.findCommentById(id);
         } catch (error) {
-            throw new Error('Error finding by id: ' + error.message);
+            throw new Error('Error finding by id: ' + (error as any).message);
         }
     }
 
@@ -37,7 +37,7 @@ class CommentUseCase {
         try {
             return this.commentRepository.findByFeedbackReportId(id);
         } catch (error) {
-            throw new Error('Error finding by id: ' + error.message);
+            throw new Error('Error finding by id: ' + (error as any).message);
         }
     }
 
@@ -45,7 +45,7 @@ class CommentUseCase {
         try {
             return this.commentRepository.deleteById(id);
         } catch (error) {
-            throw new Error('Error deleting by id: ' + error.message);
+            throw new Error('Error deleting by id: ' + (error as any).message);
         }
     }
 

@@ -134,7 +134,7 @@ Run DataBase via Docker.
 Start the server (only when finish the above command)
 
 ```bash
-  npm run start
+  npm run dev
 ```
 
 

@@ -31,7 +31,7 @@ class ReportFeedbackUseCase {
             });
             return result;
         } catch (error) {
-            throw new Error('Error creating report or feedback: ' + error.message);
+            throw new Error('Error creating report or feedback: ' + (error as any).message);
         }
     }
 
@@ -40,7 +40,7 @@ class ReportFeedbackUseCase {
             const normalizedType = type.toUpperCase() as ReportFeedbackType;
             return this.reportFeedbackRepository.findAllByType(normalizedType);
         } catch (error) {
-            throw new Error('Error finding all by type: ' + error.message);
+            throw new Error('Error finding all by type: ' + (error as any).message);
         }
     }
 
@@ -48,7 +48,7 @@ class ReportFeedbackUseCase {
         try {
             return this.reportFeedbackRepository.findById(id);
         } catch (error) {
-            throw new Error('Error finding by id: ' + error.message);
+            throw new Error('Error finding by id: ' + (error as any).message);
         }
     }
 
@@ -56,7 +56,7 @@ class ReportFeedbackUseCase {
         try {
             return this.reportFeedbackRepository.deleteById(id);
         } catch (error) {
-            throw new Error('Error deleting by id: ' + error.message);
+            throw new Error('Error deleting by id: ' + (error as any).message);
         }
     }
 
@@ -65,7 +65,7 @@ class ReportFeedbackUseCase {
             const normalizedStatus = status.toUpperCase() as ReportFeedbackStatus;
             return this.reportFeedbackRepository.updateStatusById(id, { status: normalizedStatus });
         } catch (error) {
-            throw new Error('Error updating status by id: ' + error.message);
+            throw new Error('Error updating status by id: ' + (error as any).message);
         }
     }
 }

@@ -21,8 +21,12 @@ app.register(commentReportFeedbackRoutes, {
 
 const start = async () => {
     try {
-        await app.listen({ port: 3001, host: '0.0.0.0' });
-        console.log('🔥 Server is running on port 3001 🔥');
+        await app.listen(
+            {
+                port: process.env.PORT ? Number(process.env.PORT) : 3001,
+                host: '0.0.0.0'
+            });
+        console.log('🔥 Server is running 🔥');
     } catch (err) {
         app.log.error(err);
     }

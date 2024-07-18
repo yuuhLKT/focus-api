@@ -6,15 +6,19 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsx watch src/server.ts"
+    "build": "tsup src --minify",
+    "dev": "tsx watch src/server.ts",
+    "start": "node dist/server.cjs"
   },
   "keywords": [],
   "author": "Yuri Luiz",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.14.10",
+    "@types/uuid": "^10.0.0",
     "dotenv": "^16.4.5",
     "prisma": "^5.16.2",
+    "tsup": "^8.1.2",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3"
   },
